@@ -1,6 +1,7 @@
 package com.calendartest;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ListView event_list;    //活動清單物件
     ArrayList<String> event_array;  //活動內容陣列
     ArrayAdapter<String> myAd;  //清單內容排版物件，可自訂清單內容與排版
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dbHelper = new DBHelper(this, null, null, 1);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent toAdd = new Intent(MainActivity.this, AddEventActivity.class);
                 toAdd.putExtra("Date", event_list.getItemAtPosition(0).toString());
-//                String currentTime = String.valueOf(c.get(Calendar.HOUR_OF_DAY)) + "時" + String.valueOf(c.get(Calendar.MINUTE)) + "分";
-//                toAdd.putExtra("Time", currentTime);
                 startActivityForResult(toAdd, 200);
             }
         });
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mode_week:
                 mcv.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+                mcv.goToNext();
                 break;
             case R.id.action_today:
                 mcv.setCurrentDate(c);
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 200 && resultCode == RESULT_OK) {
+
             event_array.add(data.getExtras().getString("名稱"));
             event_array.add(data.getExtras().getString("地點"));
             event_array.add(data.getExtras().getString("開始日期"));
