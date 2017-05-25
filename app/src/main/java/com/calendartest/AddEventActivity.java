@@ -27,7 +27,6 @@ public class AddEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_event);
 
         dbHelper = new DBHelper(this, null, null, 1);
-        db = dbHelper.getWritableDatabase();
 
         eventName = (EditText) findViewById(R.id.eventName);
         eventLocation = (EditText) findViewById(R.id.eventLocation);
@@ -61,6 +60,7 @@ public class AddEventActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addSave:
+//                db = dbHelper.getWritableDatabase();
                 Bundle values = new Bundle();
                 values.putString("名稱", eventName.getText().toString());
                 values.putString("地點", eventLocation.getText().toString());

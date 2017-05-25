@@ -2,6 +2,7 @@ package com.calendartest;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     ListView event_list;    //活動清單物件
     ArrayList<String> event_array;  //活動內容陣列
     ArrayAdapter<String> myAd;  //清單內容排版物件，可自訂清單內容與排版
-    DBHelper dbHelper;
+    public DBHelper dbHelper;
+    public SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,14 +114,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 200 && resultCode == RESULT_OK) {
 
-            event_array.add(data.getExtras().getString("名稱"));
-            event_array.add(data.getExtras().getString("地點"));
-            event_array.add(data.getExtras().getString("開始日期"));
-            event_array.add(data.getExtras().getString("結束日期"));
-            event_array.add(data.getExtras().getString("重複頻率"));
-            event_array.add(data.getExtras().getString("隱私權"));
-            event_array.add(data.getExtras().getString("提醒"));
-            event_array.add(data.getExtras().getString("說明"));
+//            db = dbHelper.getWritableDatabase();
+//            Cursor result = db.rawQuery("SELECT * FROM EventLog", new String[]{"No Result"});
+//            event_array.add(result.getString(0));
+
+//            event_array.add(data.getExtras().getString("名稱"));
+//            event_array.add(data.getExtras().getString("地點"));
+//            event_array.add(data.getExtras().getString("開始日期"));
+//            event_array.add(data.getExtras().getString("結束日期"));
+//            event_array.add(data.getExtras().getString("重複頻率"));
+//            event_array.add(data.getExtras().getString("隱私權"));
+//            event_array.add(data.getExtras().getString("提醒"));
+//            event_array.add(data.getExtras().getString("說明"));
             myAd = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, event_array);
             event_list.setAdapter(myAd);
         }
